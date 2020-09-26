@@ -15,6 +15,13 @@ pygame.display.set_icon(icon)
 playerImg = pygame.image.load("player.png")
 playerX = 370
 playery = 480
+playerX_change = 0
+
+#Enemy
+enemyImg = pygame.image.load("alien.png")
+enemyX = 370
+enemyy = 480
+enemyX_change = 0
 
 def player(x,y):
     screen.blit(playerImg,(x,y))
@@ -28,6 +35,23 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    #Movement with arrows
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_LEFT:
+            playerX_change = -0.3
+        if event.key == pygame.K_RIGHT:
+            playerX_change = 0.3
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+            playerX_change = 0
+
+    playerX += playerX_change
+
+    if playerX <= 0:
+        playerX = 0
+    elif playerX >= 736:
+        playerX = 736
 
     player(playerX,playery)
     pygame.display.update()
